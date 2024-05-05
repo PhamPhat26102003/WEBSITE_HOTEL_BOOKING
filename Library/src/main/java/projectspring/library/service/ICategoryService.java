@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ICategoryService {
     List<Category> findAll();
+    List<Category> findByActivated();
     Category save(Category category);
     Category findById(Long id);
     Category update(Category category);

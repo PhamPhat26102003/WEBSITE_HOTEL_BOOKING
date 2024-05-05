@@ -24,6 +24,7 @@ public class Hotel {
     private String description;
     @Transient
     private MultipartFile image;
+    private String filename;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "city_id", referencedColumnName = "city_id")
     private City city;

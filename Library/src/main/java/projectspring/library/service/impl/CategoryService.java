@@ -18,6 +18,11 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    public List<Category> findByActivated() {
+        return categoryRepository.findByActivated();
+    }
+
+    @Override
     public Category save(Category category) {
         return categoryRepository.save(category);
     }

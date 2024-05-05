@@ -16,4 +16,6 @@ public class City {
     @Column(name = "city_id")
     private Long id;
     private String name;
+    private boolean is_activated;
+    private boolean is_deleted;
 }
