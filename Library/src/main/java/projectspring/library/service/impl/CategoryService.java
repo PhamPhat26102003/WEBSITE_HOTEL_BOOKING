@@ -35,4 +35,20 @@ public class CategoryService implements ICategoryService {
             categoryUpdate.set_deleted(category.is_deleted());
         return categoryRepository.save(categoryUpdate);
     }
+
+    @Override
+    public void enable(Long id) {
+        Category category = categoryRepository.getById(id);
+        category.set_activated(true);
+        category.set_deleted(false);
+        categoryRepository.save(category);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Category category = categoryRepository.getById(id);
+        category.set_deleted(true);
+        category.set_activated(false);
+        categoryRepository.save(category);
+    }
 }

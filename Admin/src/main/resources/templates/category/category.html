@@ -46,6 +46,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Name</th>
                             <th scope="col">Update</th>
+                            <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,6 +55,12 @@
                             <td th:text="${category.name}"></td>
                             <td>
                                 <a th:href="@{/update-category/{id}(id=*{id})}" class="btn btn-primary">Update</a>
+                            </td>
+                            <td>
+                                <a th:if="${category.is_activated}==false"
+                                        th:href="@{/enable-category/{id}(id=*{id})}" class="btn btn-primary">Enable</a>
+                                <a th:if="${category.is_deleted}==false"
+                                        th:href="@{/delete-category/{id}(id=*{id})}" class="btn btn-warning">Delete</a>
                             </td>
                         </tr>
                         </tbody>

@@ -82,4 +82,32 @@ public class CategoryController {
             return "redirect:/categories";
         }
     }
+
+    @RequestMapping(value = "/enable-category/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enableCategoryById(@PathVariable("id") Long id,
+                                     RedirectAttributes redirectAttributes){
+        try{
+            categoryService.enable(id);
+            redirectAttributes.addFlashAttribute("success", "Enable success");
+            return "redirect:/categories";
+        }catch (Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("failed", "Failed to enable!!!");
+            return "redirect:/categories";
+        }
+    }
+
+    @RequestMapping(value = "/delete-category/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String deleteCategoryById(@PathVariable("id") Long id,
+                                     RedirectAttributes redirectAttributes){
+        try{
+            categoryService.delete(id);
+            redirectAttributes.addFlashAttribute("success", "Delete success");
+            return "redirect:/categories";
+        }catch(Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("failed", "Failed to delete!!!");
+            return "redirect:/categories";
+        }
+    }
 }
