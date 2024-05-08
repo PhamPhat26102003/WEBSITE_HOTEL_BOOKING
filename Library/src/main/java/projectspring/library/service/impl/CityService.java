@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import projectspring.library.model.City;
 import projectspring.library.repository.ICityRepositoty;
 import projectspring.library.service.ICityService;
+import projectspring.library.service.IStoreService;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
 public class CityService implements ICityService {
     @Autowired
     private ICityRepositoty cityRepositoty;
+    @Autowired
+    private IStoreService storeService;
     @Override
     public List<City> findAll() {
         return cityRepositoty.findAll();
@@ -37,8 +40,14 @@ public class CityService implements ICityService {
         try{
             City cityUpdate = cityRepositoty.getById(city.getId());
             cityUpdate.setName(city.getName());
+            cityUpdate.setProperties(city.getProperties());
             cityUpdate.set_activated(city.is_activated());
             cityUpdate.set_deleted(city.is_deleted());
+            if(!city.getImage().isEmpty()){
+                storeService.deleteFile(cityUpdate.getFilename());
+                String filename = storeService.storeFile(city.getImage());
+                cityUpdate.setFilename(filename);
+            }
             return cityRepositoty.save(cityUpdate);
         }catch(Exception e){
             e.printStackTrace();

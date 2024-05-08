@@ -30,8 +30,7 @@
                         <p class="text-center">No city</p>
                     </div>
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                             data-target="#exampleModal" data-whatever="@mdo">Add new city</button>
+                    <a class="btn btn-primary" th:href="@{/add-city}">Add new city</a>
 
                     <div th:if="${success}" class="text-center alert alert-success">
                         <p th:text="${success}"></p>
@@ -46,6 +45,8 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Properties</th>
+                            <th scope="col">City</th>
                             <th scope="col">Update</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -54,6 +55,10 @@
                         <tr th:each="city : ${cities}" th:object="${city}">
                             <th scope="row" th:text="${city.id}"></th>
                             <td th:text="${city.name}"></td>
+                            <td th:text="${city.properties}"></td>
+                            <td>
+                                <img style="width:100px" th:src="@{/assets/{filename}(filename=*{filename})}"/>
+                            </td>
                             <td>
                                 <a th:href="@{/update-city/{id}(id=*{id})}" class="btn btn-primary">Update</a>
                             </td>
@@ -91,30 +96,6 @@
     <!-- Logout Modal-->
     <div th:replace="~{fragments :: logoutModal}">
     </div>
-
-    <!-- Modal add new category start-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:action="@{/add-city}" method="post" th:object="${cityNew}">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New city</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Name city:</label>
-                            <input type="text" class="form-control" th:field = "*{name}" id="recipient-name">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <!-- Modal add new category end-->
 
     <div th:replace="~{fragments :: script}"></div>
     <script th:src="@{/js/categories.js}"></script>
