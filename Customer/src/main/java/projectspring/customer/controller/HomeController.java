@@ -25,4 +25,11 @@ public class HomeController {
         model.addAttribute("categories", categories);
         return "index";
     }
+
+    @GetMapping("list-hotel")
+    public String displayListHotelPage(Model model){
+        List<Category> categories = categoryService.findByActivated();
+        model.addAttribute("categories", categories);
+        return "list-hotel";
+    }
 }

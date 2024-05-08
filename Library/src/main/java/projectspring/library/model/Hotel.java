@@ -22,6 +22,9 @@ public class Hotel {
     private double costPrice;
     private String address;
     private String description;
+    private String superb;
+    private String review;
+    private String map;
     @Transient
     private MultipartFile image;
     private String filename;
