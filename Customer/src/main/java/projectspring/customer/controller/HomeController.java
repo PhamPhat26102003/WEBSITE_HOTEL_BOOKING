@@ -38,6 +38,6 @@ public class HomeController {
         model.addAttribute("categories", categories);
         model.addAttribute("hotels", hotels);
         model.addAttribute("title", "Hotel");
-        return "list-hotel";
+        return "hotel/list-hotel";
     }
 }

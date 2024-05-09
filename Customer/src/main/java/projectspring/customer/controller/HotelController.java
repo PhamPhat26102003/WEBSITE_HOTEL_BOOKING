@@ -31,7 +31,7 @@ public class HotelController {
         model.addAttribute("hotels", hotels);
         model.addAttribute("categories", categories);
         model.addAttribute("title", "Hotel");
-        return "list-hotel";
+        return "hotel/list-hotel";
     }
 
     @GetMapping("/list-hotel/category/{categoryId}")
@@ -42,7 +42,13 @@ public class HotelController {
         model.addAttribute("hotels", hotels);
         model.addAttribute("categories", categories);
         model.addAttribute("title", "Hotel");
-        return "list-hotel";
+        return "hotel/list-hotel";
+    }
+
+    @GetMapping("/detail")
+    public String detailInfoHotel(Model model){
+        model.addAttribute("title", "Detail");
+        return "hotel/detail";
     }
 
 }

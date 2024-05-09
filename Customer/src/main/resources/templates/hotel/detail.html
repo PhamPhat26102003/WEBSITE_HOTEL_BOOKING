@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+    <head th:replace="~{/fragments :: header}">
+    </head>
+
+<body>
+    
+<section th:replace="~{fragments :: banner}"></section>
+
+<section class="container" style="padding:50px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <p class="name-hotel" style="font-size: 30px;font-weight: 600;">La Passion Hanoi Hotel & Spa</p>
+                <div style="display:flex;align-item:center;gap:3px">
+                    <img style="width: 20px;height: 20px;" th:src="@{/img/map.png}">
+                    <p class="address-hotel" style="font-size: 16px;">Hàng Thùng 26, Hoan Kiem, Hanoi, Vietnam </p>
+                    <p class="show-map" style="font-size: 16px;
+                                                margin-left: 10px;
+                                                color: blue;">
+                        <a style="text-decoration:underline; margin-left:5px"> - Show map</a>
+                    </p>
+                </div>
+                <div class="row" style="margin-left: -20px;">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <img th:src="@{/img/room1.jpg}" style="margin-bottom:10px">
+                            <img th:src="@{/img/room2.jpg}" style="">
+                        </div>
+                        <div class="col-md-8">
+                            <img th:src="@{/img/danang.jpg}" style="">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:20px">
+                                <div class="col-md-3"><img th:src="@{/img/subroom1.jpg}" style=""></div>
+                                <div class="col-md-3"><img th:src="@{/img/subroom2.jpg}" style=""></div>
+                                <div class="col-md-3"><img th:src="@{/img/subroom3.jpg}" style=""></div>
+                                <div class="col-md-3"><img th:src="@{/img/subroom4.jpg}" style=""></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="description-hotel" style="width: 80%;margin-top:30px">
+                    Situated in Hanoi and with Thang Long Water Puppet Theater reachable within 100 metres, La Passion Hanoi Hotel & Spa features express check-in and check-out, allergy-free rooms, a restaurant, free WiFithroughout the property and a terrace. This 4-star hotel offers room service and a shared lounge. The accommodation provides a 24-hour front desk, a shared kitchen and currency exchange for guests.
+
+                    At the hotel, rooms are equipped with a desk. Complete with a private bathroom fitted with a bidet and bathrobes, the rooms at La Passion Hanoi Hotel & Spa have a flat-screen TV and air conditioning, and some rooms include a seating area. At the accommodation rooms come with bed linen and towels.
+                </p>
+            </div>
+            <div class="col-md-4" style="margin-top: 75px;">
+                <div style="display:flex;align-item:center;gap:10px">
+                    <p style="font-size: 18px;font-weight:600">Superb</p>
+                    <p style="background: blue;
+                                                                    padding: 5px;
+                                                                    color: white;
+                                                                    border-radius: 5px;
+                                                                    font-size: 15px;
+                                                                    font-weight: 600;">9.0</p>
+                </div>
+                <p class="review" style="font-size:15px;font-weight:500;color:gray">1.345 review</p>
+
+                <div style="display:flex; align-item:center">
+                    <img style="width:12px" th:src="@{/img/star.png}">
+                    <img style="width:12px" th:src="@{/img/star.png}">
+                    <img style="width:12px" th:src="@{/img/star.png}">
+                    <img style="width:12px" th:src="@{/img/star.png}">
+                    <img style="width:12px" th:src="@{/img/star.png}">
+                </div>
+                <p class="category-hotel" style="font-size: 18px;font-weight:600;margin-top:10px">Resort</p>
+                <a class="ggmap">
+                    <img th:src="@{/img/ggmap.jpg}">
+                    <a class="btn btn-primary" style="padding: 10px;
+                                                        position: absolute;
+                                                        margin-top: 150px;
+                                                        margin-left: -239px;
+                                                        width: 150px;
+                                                        font-size: 13px;
+                                                        font-weight: 600;
+                                                        background: blue;">Show on map</a>
+                    <img style="width: 50px;height: 50px;margin-top: -255px;margin-left: 145px;" th:src="@{/img/map.png}">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+<div th:replace="~{fragments :: script}"></div>
+
+</body>
+</html>
