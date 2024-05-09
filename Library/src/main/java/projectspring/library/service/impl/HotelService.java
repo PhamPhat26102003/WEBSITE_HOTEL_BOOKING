@@ -1,7 +1,12 @@
 package projectspring.library.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import projectspring.library.model.Category;
+import projectspring.library.model.City;
 import projectspring.library.model.Hotel;
 import projectspring.library.repository.IHotelRepository;
 import projectspring.library.service.IHotelService;
@@ -21,6 +26,28 @@ public class HotelService implements IHotelService {
             return hotelRepository.findAll(keyword);
         }
         return hotelRepository.findAll();
+    }
+
+    @Override
+    public List<Hotel> findByActivated() {
+        return hotelRepository.findByActivated();
+    }
+
+    @Override
+    public List<Hotel> findHotelByCity(City city) {
+        return hotelRepository.findProductByCity(city);
+    }
+
+    @Override
+    public List<Hotel> findHotelByCategory(Category category) {
+        return hotelRepository.findHotelByCategory(category);
+    }
+
+    @Override
+    public Page<Hotel> pageHotel(int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        Page<Hotel> hotelPage = hotelRepository.pageHotel(pageable);
+        return hotelPage;
     }
 
     @Override

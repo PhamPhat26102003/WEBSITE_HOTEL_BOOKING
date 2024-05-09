@@ -1,6 +1,7 @@
 package projectspring.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,15 +31,16 @@ public class HotelController {
     @Autowired
     private IStoreService storeService;
 
-    @GetMapping("/hotels")
-    public String displayHotelPage(@Param("keyword") String keyword, Model model, Principal principal){
+    @GetMapping("/hotels/{pageNo}")
+    public String displayHotelPage(@PathVariable("pageNo") int pageNo, Model model, Principal principal){
         if(principal == null) {
             return "redirect:/login";
         }
-        List<Hotel> hotels = hotelService.findAll(keyword);
+        Page<Hotel> hotels = hotelService.pageHotel(pageNo);
         model.addAttribute("hotels", hotels);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("size", hotels.size());
+        model.addAttribute("size", hotels.getSize());
+        model.addAttribute("totalPage", hotels.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
         model.addAttribute("title", "Hotel");
         return "hotel/hotels";
     }
@@ -78,7 +80,7 @@ public class HotelController {
             hotel.setFilename(filename);
             hotelService.save(hotel);
             redirectAttributes.addFlashAttribute("success", "Add new hotel success");
-            return "redirect:/hotels";
+            return "redirect:/hotels/0";
         }catch(Exception e){
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("failed", "Failed to add new hotel!!!");
@@ -117,11 +119,11 @@ public class HotelController {
             }
             hotelService.update(hotel);
             redirectAttributes.addFlashAttribute("success", "Update hotel success");
-            return "redirect:/hotels";
+            return "redirect:/hotels/0";
         }catch (Exception e){
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("failed", "Failed to update!!!");
-            return "redirect:/hotels";
+            return "redirect:/hotels/0";
         }
     }
 
@@ -130,11 +132,11 @@ public class HotelController {
         try{
             hotelService.enable(id);
             redirectAttributes.addFlashAttribute("success", "Enable success");
-            return "redirect:/hotels";
+            return "redirect:/hotels/0";
         }catch (Exception e){
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("failed", "Failed to enable!!!");
-            return "redirect:/hotels";
+            return "redirect:/hotels/0";
         }
     }
 
@@ -143,11 +145,11 @@ public class HotelController {
         try{
             hotelService.delete(id);
             redirectAttributes.addFlashAttribute("success", "Delete success");
-            return "redirect:/hotels";
+            return "redirect:/hotels/0";
         }catch (Exception e){
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("failed", "Failed to delete!!!");
-            return "redirect:/hotels";
+            return "redirect:/hotels/0";
         }
     }
 }

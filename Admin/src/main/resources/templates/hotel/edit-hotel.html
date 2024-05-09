@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <label for="name">NAME HOTEL</label>
                         <input type="text" class="form-control" id="name" name="name"
-                               placeholder="Name hotel" th:field="*{name}">
+                               placeholder="Name hotel" th:field="*{name}" required>
 
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
                              th:errors="*{name}">
@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <label for="quantityRoom">QUANTITY ROOM</label>
                         <input type="text" class="form-control" id="quantityRoom" name="quantityRoom"
-                               placeholder="Quantity room" th:field="*{quantityRoom}">
+                               placeholder="Quantity room" th:field="*{quantityRoom}" required>
 
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('quantityRoom')}"
                              th:errors="*{quantityRoom}">
@@ -53,7 +53,7 @@
                     <div class="form-group">
                         <label for="status">STATUS</label>
                         <input type="text" class="form-control" id="status" name="status"
-                               placeholder="Status" th:field="*{status}">
+                               placeholder="Status" th:field="*{status}" required>
 
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}"
                              th:errors="*{status}">
@@ -63,7 +63,7 @@
                     <div class="form-group">
                         <label for="costPrice">PRICE</label>
                         <input type="text" class="form-control" id="costPrice" name="costPrice"
-                               placeholder="Price" th:field="*{costPrice}">
+                               placeholder="Price" th:field="*{costPrice}" required>
 
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('costPrice')}"
                              th:errors="*{costPrice}">
@@ -73,7 +73,7 @@
                     <div class="form-group">
                         <label for="address">ADDRESS</label>
                         <input type="text" class="form-control" id="address" name="address"
-                               placeholder="Address" th:field="*{address}">
+                               placeholder="Address" th:field="*{address}" required>
 
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('address')}"
                              th:errors="*{address}">
@@ -82,8 +82,7 @@
 
                     <div class="form-group">
                         <label class="form-check-label" for="description">DESCRIPTION</label>
-                        <input type="text" class="form-control" id="description" name="description"
-                               placeholder="Description" th:field="*{description}">
+                        <textarea class="form-control" id="description" name="description" th:field="*{description}" required></textarea>
 
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}"
                              th:errors="*{description}">
@@ -93,25 +92,24 @@
                     <div class="form-group">
                         <label class="form-check-label" for="superb">SUPERB</label>
                         <input type="text" class="form-control" id="superb" name="superb"
-                               placeholder="Superb" th:field="*{superb}">
+                               placeholder="Superb" th:field="*{superb}" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-check-label" for="review">REVIEWS</label>
                         <input type="text" class="form-control" id="review" name="review"
-                               placeholder="Reviews" th:field="*{review}">
+                               placeholder="Reviews" th:field="*{review}" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-check-label" for="map">MAP</label>
-                        <input type="text" class="form-control" id="map" name="map"
-                               placeholder="Map" th:field="*{map}">
+                        <textarea class="form-control" id="map" name="map" th:field="*{map}" required></textarea>
                     </div>
 
 
                     <div class="form-group">
                         <label class="form-check-label" for="image">IMAGE</label>
-                        <input type="file" id="image" name="image" th:field="*{image}">
+                        <input type="file" id="image" name="image" th:field="*{image}" required>
 
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('image')}"
                              th:errors="*{image}">
@@ -120,7 +118,7 @@
 
                     <div class="form-group">
                         <label for="nameCity">NAME CITY</label>
-                        <select class="form-control" id="nameCity" name="city" th:field="*{city}" multiple>
+                        <select class="form-control" id="nameCity" name="city" th:field="*{city}" multiple required>
                             <option th:each="city : ${cities}"
                                     th:value="${city.id}"
                                     th:text="${city.name}"></option>
@@ -133,7 +131,7 @@
 
                     <div class="form-group">
                         <label for="nameCategory">NAME CATEGORY</label>
-                        <select class="form-control" id="nameCategory" name="category" th:field="*{category}" multiple>
+                        <select class="form-control" id="nameCategory" name="category" th:field="*{category}" multiple required>
                             <option th:each="category : ${categories}"
                                     th:value="${category.id}"
                                     th:text="${category.name}"></option>

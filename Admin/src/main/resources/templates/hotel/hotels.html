@@ -54,7 +54,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Room</th>
                         <th scope="col">Address</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">City</th>
                         <th scope="col">Hotel</th>
                         <th scope="col">Update</th>
                         <th scope="col">Action</th>
@@ -65,7 +65,7 @@
                         <th scope="row" th:text="${hotel.name}"></th>
                         <td th:text="${hotel.quantityRoom}"></td>
                         <td th:text="${hotel.address}"></td>
-                        <td th:text="${hotel.status}"></td>
+                        <td th:text="${hotel.city.name}"></td>
                         <td style="width:100px; height:100px">
                             <a th:href="@{/assets/{filename}(filename=*{filename})}">
                                 <img th:src="@{/assets/{filename}(filename=*{filename})}" alt="" class="img-thumbnail w-100">
@@ -84,23 +84,23 @@
                     </tbody>
                 </table>
 
-                <!--Phan trang
+                <!--Phan trang-->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li th:if="${currentPage !=0}" class="page-item">
-                            <a th:href="@{'/laptop/' + ${currentPage - 1}}" class="page-link">Previous</a>
+                            <a th:href="@{'/hotels/' + ${currentPage - 1}}" class="page-link">Previous</a>
                         </li>
                         <li th:each="i : ${#numbers.sequence(1, totalPage)}"
                             th:classappend="${currentPage == i - 1 ? 'active' : ''}" class="page-item">
-                            <a th:href="@{'/laptop/' + ${i - 1}}" class="page-link" href="#">
+                            <a th:href="@{'/hotels/' + ${i - 1}}" class="page-link" href="#">
                                 <span th:text="${i}"></span>
                             </a>
                         </li>
                         <li th:if="${currentPage + 1 != totalPage}" class="page-item">
-                            <a th:href="@{'/laptop/' + ${currentPage + 1}}" class="page-link">Next</a>
+                            <a th:href="@{'/hotels/' + ${currentPage + 1}}" class="page-link">Next</a>
                         </li>
                     </ul>
-                </nav>-->
+                </nav>
 
             </div>
             <!-- End of container fluid-->
