@@ -17,6 +17,7 @@ public class Booking {
     @Column(name = "booking_id")
     private Long id;
     private int totalHotel;
+    private int totalDay;
     private double totalPrice;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")

@@ -88,7 +88,28 @@ public class BookingService implements IBookingService {
 
     @Override
     public Booking updateBookingHotel(Hotel hotel, int quantityRoom, int quantityDay, Customer customer) {
-        return null;
+        Booking booking =customer.getBooking();
+        Set<BookItem> bookItems = booking.getBookItems();
+
+        BookItem bookItem = findBookItem(bookItems, hotel.getId());
+        bookItem.setQuantityDay(quantityDay);
+        bookItem.setQuantityRoom(quantityRoom);
+        if(quantityDay > 1){
+            if(quantityRoom > 1){
+                bookItem.setTotalPrice(bookItem.getTotalPrice() + ((quantityDay * hotel.getCostPrice()) * quantityRoom)*0.7);
+            }
+        }
+        bookItem.setTotalPrice(bookItem.getTotalPrice() + (quantityDay * hotel.getCostPrice()));
+        bookItemRepository.save(bookItem);
+
+        int totalRoom = totalRoom(bookItems);
+        int totalDay = totalDay(bookItems);
+        double totalPrice = totalPrice(bookItems);
+
+        booking.setTotalHotel(totalRoom);
+        booking.setTotalDay(totalDay);
+        booking.setTotalPrice(totalPrice);
+        return bookingRepository.save(booking);
     }
 
     private BookItem findBookItem(Set<BookItem> bookItems, Long id){

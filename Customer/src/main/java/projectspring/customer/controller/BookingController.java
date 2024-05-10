@@ -4,9 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import projectspring.library.model.BookItem;
 import projectspring.library.model.Booking;
 import projectspring.library.model.Customer;
@@ -55,5 +53,23 @@ public class BookingController {
         Customer customer = customerService.findByUsername(username);
         Booking booking = bookingService.bookingHotel(hotel, quantityRoom, customer);
         return "redirect:" + http.getHeader("Referer");
+    }
+
+    @RequestMapping(value = "/update-booking", method = RequestMethod.POST, params = "action=update")
+    public String updateBookingHotel(@RequestParam("quantityRoom") int quantityRoom,
+                                     @RequestParam("quantityDay") int quantityDay,
+                                     @RequestParam("id") Long id,
+                                     Model model,
+                                     Principal principal){
+        if(principal == null){
+            return "redirect:/login";
+        }else{
+            String username = principal.getName();
+            Customer customer = customerService.findByUsername(username);
+            Hotel hotel = hotelService.findById(id);
+            Booking booking = bookingService.updateBookingHotel(hotel, quantityRoom, quantityDay, customer);
+            model.addAttribute("booking", booking.getBookItems());
+            return "redirect:/booking";
+        }
     }
 }

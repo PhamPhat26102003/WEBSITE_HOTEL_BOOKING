@@ -1,20 +1,21 @@
 package projectspring.customer.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import projectspring.library.dto.CustomerDto;
+import projectspring.library.model.Booking;
 import projectspring.library.model.City;
 import projectspring.library.model.Customer;
 import projectspring.library.service.ICityService;
 import projectspring.library.service.ICustomerService;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller

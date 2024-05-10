@@ -61,11 +61,11 @@
                                                         font-size: 13px;
                                                         background: none;
                                                         font-weight: 600;
-                                                        color: #6c7591;">
-                    <option selected>Authentication</option>
-                    <option value="1">Login</option>
-                    <option value="2">Sign up</option>
-                    <option value="3">Logout</option>
+                                                        color: #6c7591;" onchange="location=this.value">
+                    <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
+                    <option th:if="${session.username} == null" value="http://localhost:8088/hotelbooking/login">Sign In</option>
+                    <option th:if="${session.username} != null" value="http://localhost:8088/hotelbooking/login?logout">Logout</option>
+                    <option value="http://localhost:8088/hotelbooking/register">Sign up</option>
                 </select>
 
             </nav>
