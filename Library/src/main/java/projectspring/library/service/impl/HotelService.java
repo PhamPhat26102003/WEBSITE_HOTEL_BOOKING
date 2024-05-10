@@ -44,6 +44,11 @@ public class HotelService implements IHotelService {
     }
 
     @Override
+    public List<Hotel> getRelatedHotel(City city, Category category) {
+        return hotelRepository.getRelatedHotel(city, category);
+    }
+
+    @Override
     public Page<Hotel> pageHotel(int pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
         Page<Hotel> hotelPage = hotelRepository.pageHotel(pageable);

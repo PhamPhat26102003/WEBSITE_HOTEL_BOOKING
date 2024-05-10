@@ -26,6 +26,9 @@ public interface IHotelRepository extends JpaRepository<Hotel, Long> {
     @Query("SELECT h FROM Hotel h WHERE h.city = :city")
     List<Hotel> findProductByCity(@Param("city")City city);
 
+    @Query("SELECT h FROM Hotel h WHERE h.city = :city AND h.category = :category")
+    List<Hotel> getRelatedHotel(@Param("city") City city, @Param("category") Category category);
+
     @Query("SELECT h FROM Hotel h WHERE h.category = :category")
     List<Hotel> findHotelByCategory(@Param("category")Category category);
 }

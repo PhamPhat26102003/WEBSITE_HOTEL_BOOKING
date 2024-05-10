@@ -12,6 +12,7 @@ public interface IHotelService {
     List<Hotel> findByActivated();
     List<Hotel> findHotelByCity(City city);
     List<Hotel> findHotelByCategory(Category category);
+    List<Hotel> getRelatedHotel(City city, Category category);
     Page<Hotel> pageHotel(int pageNo);
     Hotel findById(Long id);
     Hotel save(Hotel hotel);

@@ -45,8 +45,16 @@ public class HotelController {
         return "hotel/list-hotel";
     }
 
-    @GetMapping("/detail")
-    public String detailInfoHotel(Model model){
+    @GetMapping("/detail/{id}")
+    public String detailInfoHotel(@PathVariable("id") Long id, Model model){
+        Hotel hotel = hotelService.findById(id);
+        Long categoryId = hotel.getCategory().getId();
+        Long cityId = hotel.getCity().getId();
+        Category category = categoryService.findById(categoryId);
+        City city = cityService.findById(cityId);
+        List<Hotel> hotels = hotelService.getRelatedHotel(city, category);
+        model.addAttribute("hotels", hotels);
+        model.addAttribute("hotel", hotel);
         model.addAttribute("title", "Detail");
         return "hotel/detail";
     }

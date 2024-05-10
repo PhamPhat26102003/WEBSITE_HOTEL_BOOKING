@@ -9,16 +9,16 @@
 
 <section class="container" style="padding:50px">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" th:object="${hotel}">
             <div class="col-md-8">
-                <p class="name-hotel" style="font-size: 30px;font-weight: 600;">La Passion Hanoi Hotel & Spa</p>
+                <p class="name-hotel" style="font-size: 30px;font-weight: 600;" th:text="*{name}"></p>
                 <div style="display:flex;align-item:center;gap:3px">
                     <img style="width: 20px;height: 20px;" th:src="@{/img/map.png}">
-                    <p class="address-hotel" style="font-size: 16px;">Hàng Thùng 26, Hoan Kiem, Hanoi, Vietnam </p>
+                    <p class="address-hotel" style="font-size: 16px;" th:text="*{address}"></p>
                     <p class="show-map" style="font-size: 16px;
                                                 margin-left: 10px;
                                                 color: blue;">
-                        <a style="text-decoration:underline; margin-left:5px"> - Show map</a>
+                        <a th:href="@{*{map}}" style="text-decoration:underline; margin-left:5px"> - Show map</a>
                     </p>
                 </div>
                 <div class="row" style="margin-left: -20px;">
@@ -28,7 +28,7 @@
                             <img th:src="@{/img/room2.jpg}" style="">
                         </div>
                         <div class="col-md-8">
-                            <img th:src="@{/img/danang.jpg}" style="">
+                            <img th:src="@{/assets/{filename}(filename=*{filename})}" style="">
                         </div>
 
                         <div class="row">
@@ -41,10 +41,9 @@
                         </div>
                     </div>
                 </div>
-                <p class="description-hotel" style="width: 80%;margin-top:30px">
-                    Situated in Hanoi and with Thang Long Water Puppet Theater reachable within 100 metres, La Passion Hanoi Hotel & Spa features express check-in and check-out, allergy-free rooms, a restaurant, free WiFithroughout the property and a terrace. This 4-star hotel offers room service and a shared lounge. The accommodation provides a 24-hour front desk, a shared kitchen and currency exchange for guests.
+                <p class="description-hotel" style="width: 80%;margin-top:30px" th:text="'Situated in Hanoi and with Thang Long Water Puppet Theater reachable within 100 metres, La Passion Hanoi Hotel & Spa features express check-in and check-out, allergy-free rooms, a restaurant, free WiFithroughout the property and a terrace. This 4-star hotel offers room service and a shared lounge. The accommodation provides a 24-hour front desk, a shared kitchen and currency exchange for guests.
 
-                    At the hotel, rooms are equipped with a desk. Complete with a private bathroom fitted with a bidet and bathrobes, the rooms at La Passion Hanoi Hotel & Spa have a flat-screen TV and air conditioning, and some rooms include a seating area. At the accommodation rooms come with bed linen and towels.
+                    At the hotel, rooms are equipped with a desk. Complete with a private bathroom fitted with a bidet and bathrobes, the rooms at La Passion Hanoi Hotel & Spa have a flat-screen TV and air conditioning, and some rooms include a seating area. At the accommodation rooms come with bed linen and towels.' + *{description}">
                 </p>
             </div>
             <div class="col-md-4" style="margin-top: 75px;">
@@ -55,9 +54,9 @@
                                                                     color: white;
                                                                     border-radius: 5px;
                                                                     font-size: 15px;
-                                                                    font-weight: 600;">9.0</p>
+                                                                    font-weight: 600;" th:text="*{superb}">9.0</p>
                 </div>
-                <p class="review" style="font-size:15px;font-weight:500;color:gray">1.345 review</p>
+                <p class="review" style="font-size:15px;font-weight:500;color:gray" th:text="*{review}"></p>
 
                 <div style="display:flex; align-item:center">
                     <img style="width:12px" th:src="@{/img/star.png}">
@@ -66,8 +65,14 @@
                     <img style="width:12px" th:src="@{/img/star.png}">
                     <img style="width:12px" th:src="@{/img/star.png}">
                 </div>
-                <p class="category-hotel" style="font-size: 18px;font-weight:600;margin-top:10px">Resort</p>
-                <a class="ggmap">
+                <p class="category-hotel"
+                   style="font-size: 18px;font-weight:600;margin-top:10px" th:text="*{category.name}"></p>
+                <a class="btn btn-primary"
+                   style="font-size:15px;width:150px;background:cadetblue;margin-bottom:10px;border:none"
+                   target="_blank">
+                    Book hotel
+                </a>
+                <a class="ggmap" th:href="@{*{map}}" target="_blank">
                     <img th:src="@{/img/ggmap.jpg}">
                     <a class="btn btn-primary" style="padding: 10px;
                                                         position: absolute;
@@ -76,13 +81,87 @@
                                                         width: 150px;
                                                         font-size: 13px;
                                                         font-weight: 600;
-                                                        background: blue;">Show on map</a>
+                                                        background: blue;" th:href="@{*{map}}" target="_blank">Show on map</a>
                     <img style="width: 50px;height: 50px;margin-top: -255px;margin-left: 145px;" th:src="@{/img/map.png}">
                 </a>
             </div>
         </div>
     </div>
 </section>
+
+<section class="container">
+    <div class="row">
+        <h1 style="font-weight:600;margin-bottom:20px">Recommended hotel for you</h1>
+        <div class="col-md-12" th:each="hotel : ${hotels}" th:object="${hotel}"
+             style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;padding:20px;border-radius:10px;margin-bottom:20px">
+            <section id="third-tab-group" class="recommendedgroup">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <img style="border-radius:10px" th:src="@{/assets/{filename}(filename=*{filename})}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-8">
+                                        <p class="name-hotel" style="color:#006ce4;font-size:20px;font-weight:600" th:text="${hotel.name}">
+                                            La Passion Hanoi Hotel & SpaOpens in new window
+                                        </p>
+                                        <span class="city-hotel" style="font-size:12px" th:text="${hotel.city.name}">
+                                                        Ha Noi
+                                                    </span>
+                                        <span style="margin-left:5px"><a th:href="@{${hotel.map}}" style="font-size:12px" target="_blank">Show on map</a></span>
+                                        <p class="description-hotel" style="font-size:12px" th:text="${hotel.description}">
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                            when an unknown printer took a galley of type and scrambled it to make
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div style="display:flex;align-item:center;gap:10px">
+                                            <p>Superb</p>
+                                            <p style="background: blue;
+                                                                    padding: 5px;
+                                                                    color: white;
+                                                                    border-radius: 5px;
+                                                                    font-size: 15px;
+                                                                    font-weight: 600;" th:text="${hotel.superb}">9.0</p>
+                                        </div>
+                                        <span style="color:gray;position: absolute;margin-top: -14px;" th:text="${hotel.review}">345 review</span>
+                                        <div style="display:flex; align-item:center">
+                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                        </div>
+                                        <p class="price"
+                                           style="font-size:30px; font-weight:600;color:red;margin-top:30px;" th:text="'$' + ${hotel.costPrice}">
+                                            $21.80
+                                        </p>
+                                        <div class="action-btn" style="display: flex;gap: 5px;">
+                                            <a class="btn btn-primary"
+                                               style="font-size:15px;width:90px;background:cadetblue;margin-top:20px;border:none"
+                                                target="_blank">
+                                                Book hotel
+                                            </a>
+                                            <a class="btn btn-primary" th:href="@{/detail/{id}(id=${hotel.id})}"
+                                               style="font-size:15px;width:85px;background:#006ce4;margin-top:20px"
+                                                target="_blank">
+                                                See detail
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+</div>
 
 
 <footer th:replace="~{fragments :: footer}"></footer>
