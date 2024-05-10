@@ -10,6 +10,7 @@ import projectspring.library.model.City;
 import projectspring.library.model.Role;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -36,4 +37,8 @@ public class Customer {
                 joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Collection<Role> roles;
+    @OneToOne(mappedBy = "customer")
+    private Booking booking;
+    @OneToMany(mappedBy = "customer")
+    private List<BookHotel> bookHotels;
 }

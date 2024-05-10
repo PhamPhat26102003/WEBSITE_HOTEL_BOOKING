@@ -46,70 +46,75 @@
                     </div>
                     <div class="col-md-8" th:each="hotel : ${hotels}" th:object="${hotel}"
                          style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;padding:20px;border-radius:10px;margin-bottom:20px">
-                        <section id="third-tab-group" class="recommendedgroup">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-4">
-                                        <img style="border-radius:10px" th:src="@{/assets/{filename}(filename=*{filename})}">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="col-md-8">
-                                                    <p class="name-hotel" style="color:#006ce4;font-size:20px;font-weight:600" th:text="${hotel.name}">
-                                                        La Passion Hanoi Hotel & SpaOpens in new window
-                                                    </p>
-                                                    <span class="city-hotel" style="font-size:12px" th:text="${hotel.city.name}">
+                        <form th:action="@{/booking-hotel}" method="post">
+                            <section id="third-tab-group" class="recommendedgroup">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-4">
+                                            <img style="border-radius:10px" th:src="@{/assets/{filename}(filename=*{filename})}">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-8">
+                                                        <p class="name-hotel" style="color:#006ce4;font-size:20px;font-weight:600" th:text="${hotel.name}">
+                                                            La Passion Hanoi Hotel & SpaOpens in new window
+                                                        </p>
+                                                        <span class="city-hotel" style="font-size:12px" th:text="${hotel.city.name}">
                                                         Ha Noi
                                                     </span>
-                                                    <span style="margin-left:5px"><a th:href="@{${hotel.map}}" style="font-size:12px" target="_blank">Show on map</a></span>
-                                                    <p class="description-hotel" style="font-size:12px" th:text="${hotel.description}">
-                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                                        when an unknown printer took a galley of type and scrambled it to make
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div style="display:flex;align-item:center;gap:10px">
-                                                        <p>Superb</p>
-                                                        <p style="background: blue;
+                                                        <span style="margin-left:5px"><a th:href="@{${hotel.map}}" style="font-size:12px" target="_blank">Show on map</a></span>
+                                                        <p class="description-hotel" style="font-size:12px" th:text="${hotel.description}">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div style="display:flex;align-item:center;gap:10px">
+                                                            <p>Superb</p>
+                                                            <p style="background: blue;
                                                                     padding: 5px;
                                                                     color: white;
                                                                     border-radius: 5px;
                                                                     font-size: 15px;
                                                                     font-weight: 600;" th:text="${hotel.superb}">9.0</p>
-                                                    </div>
-                                                    <span style="color:gray;position: absolute;margin-top: -14px;" th:text="${hotel.review}">345 review</span>
-                                                    <div style="display:flex; align-item:center">
-                                                        <img style="width:12px" th:src="@{/img/star.png}">
-                                                        <img style="width:12px" th:src="@{/img/star.png}">
-                                                        <img style="width:12px" th:src="@{/img/star.png}">
-                                                        <img style="width:12px" th:src="@{/img/star.png}">
-                                                        <img style="width:12px" th:src="@{/img/star.png}">
-                                                    </div>
-                                                    <p class="price"
-                                                       style="font-size:30px; font-weight:600;color:red;margin-top:30px;" th:text="'$' + ${hotel.costPrice}">
-                                                        $21.80
-                                                    </p>
-                                                    <div class="action-btn" style="display: flex;gap: 5px;">
-                                                        <a class="btn btn-primary"
-                                                           style="font-size:15px;width:90px;background:cadetblue;margin-top:20px;border:none"
-                                                            target="_blank">
-                                                            Book hotel
-                                                        </a>
-                                                        <a class="btn btn-primary" th:href="@{/detail/{id}(id=${hotel.id})}"
-                                                           style="font-size:15px;width:85px;background:#006ce4;margin-top:20px"
-                                                            target="_blank">
-                                                            See detail
-                                                        </a>
+                                                        </div>
+                                                        <span style="color:gray;position: absolute;margin-top: -14px;" th:text="${hotel.review}">345 review</span>
+                                                        <div style="display:flex; align-item:center">
+                                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                                            <img style="width:12px" th:src="@{/img/star.png}">
+                                                        </div>
+                                                        <p class="price"
+                                                           style="font-size:30px; font-weight:600;color:red;margin-top:30px;" th:text="'$' + ${hotel.costPrice}">
+                                                            $21.80
+                                                        </p>
+                                                        <div class="action-btn" style="display: flex;gap: 5px;">
+                                                            <div class="book-hotel">
+                                                                <input type="hidden" th:value="${hotel.id}" name="id"/>
+                                                                <input type="submit" value="Book hotel" style="font-size:15px;
+                                                                                                                width:90px;
+                                                                                                                background:cadetblue;
+                                                                                                                margin-top:20px;
+                                                                                                                border:none;
+                                                                                                                color: white;
+                                                                                                                height: 32px;
+                                                                                                                border-radius: 2px;"/>
+                                                            </div>
+                                                            <a class="btn btn-primary" th:href="@{/detail/{id}(id=${hotel.id})}"
+                                                               style="font-size:15px;width:85px;background:#006ce4;margin-top:20px"
+                                                               target="_blank">
+                                                                See detail
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+                        </form>
                     </div>
                     </div>
                 </div>

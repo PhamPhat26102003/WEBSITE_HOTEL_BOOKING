@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+    <head th:replace="~{/fragments :: header}">
+    </head>
+
+<body>
+    
+<section th:replace="~{fragments :: banner}"></section>
+
+   <section class="container p-3">
+       <div class="booking-table" style="font-size:18px">
+           <table class="table">
+               <thead>
+               <tr>
+                   <th scope="col">Hotel</th>
+                   <th scope="col">Name</th>
+                   <th scope="col">Price</th>
+                   <th scope="col">Quantity Room</th>
+                   <th scope="col">Quantity Day</th>
+                   <th scope="col">Total Price</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr th:each="bookItem : ${booking.bookItems}" th:object="${booking}">
+                   <td>
+                       <img th:src="@{/assets/{filename}(filename=${bookItem.hotel.filename})}" style="width:150px">
+                   </td>
+                   <td th:text="${bookItem.hotel.name}"></td>
+                   <td th:text="'$' + ${bookItem.hotel.costPrice}"></td>
+                   <td>
+                       <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
+                           <div class="input-group-prepend">
+                               <button class="btn btn-outline-black decrease" type="button">&minus;</button>
+                           </div>
+                           <input type="text" class="form-control text-center quantity-amount"
+                                  th:value="${bookItem.quantityRoom}" placeholder="" name="quantityRoom"
+                                  aria-label="Example text with button addon" aria-describedby="button-addon1"/>
+                           <div class="input-group-append">
+                               <button class="btn btn-outline-black increase" type="button">&plus;</button>
+                           </div>
+                       </div>
+                   </td>
+
+                   <td>
+                       <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
+                           <div class="input-group-prepend">
+                               <button class="btn btn-outline-black decrease" type="button">&minus;</button>
+                           </div>
+                           <input type="text" class="form-control text-center quantity-amount"
+                                  th:value="${bookItem.quantityDay}" placeholder="" name="quantityDay"
+                                  aria-label="Example text with button addon" aria-describedby="button-addon1"/>
+                           <div class="input-group-append">
+                               <button class="btn btn-outline-black increase" type="button">&plus;</button>
+                           </div>
+                       </div>
+                   </td>
+                   <td th:text="'$' + ${bookItem.totalPrice}"></td>
+               </tr>
+               </tbody>
+           </table>
+       </div>
+   </section>
+
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+<div th:replace="~{fragments :: script}"></div>
+
+</body>
+</html>
