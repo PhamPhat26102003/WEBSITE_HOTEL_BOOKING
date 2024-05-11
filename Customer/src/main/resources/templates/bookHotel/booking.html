@@ -62,8 +62,11 @@
                        </td>
                        <td th:text="'$' + ${bookItem.totalPrice}"></td>
                        <td>
-                           <button class="btn btn-primary" type="submit" name="action" value="update" title="update">Update</button>
-                           <button class="btn btn-warning" type="submit" name="action" value="delete" title="delete">Deleted</button>
+                           <button class="btn btn-primary" type="submit" name="action" value="update" title="update">Change</button>
+                           <button class="btn btn-warning" type="submit" name="action" value="delete" title="delete">Cancel</button>
+                           <a th:href="@{/check-bill}" class="btn btn-success">
+                               Check bill
+                           </a>
                        </td>
                    </form>
                </tr>
@@ -71,7 +74,6 @@
            </table>
        </div>
    </section>
-
 
 <footer th:replace="~{fragments :: footer}"></footer>
 

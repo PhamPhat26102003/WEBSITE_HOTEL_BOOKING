@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+    <head th:replace="~{/fragments :: header}">
+    </head>
+
+<body>
+    
+<section th:replace="~{fragments :: banner}"></section>
+
+<section class="container" style="padding:50px">
+    <div class="row">
+        <div class="col-md-6 mb-5 mb-md-0">
+            <h1 class="mb-3 text-black">Billing Details</h1>
+            <form th:object="${customer}">
+                <div class="p-3 p-lg-5 border bg-white" style="font-size: 15px;">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{firstName}" class="form-control" id="c_fname" name="firstName" style="font-size: 15px;" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{lastName}" class="form-control" id="c_lname" name="lastName" style="font-size: 15px;" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{address}" class="form-control" id="c_address"
+                                   name="address" placeholder="Street address" style="font-size: 15px;" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="c_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{country}" class="form-control" id="c_state_country" name="country" style="font-size: 15px;" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-5">
+                        <div class="col-md-6">
+                            <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{username}" class="form-control" id="c_email_address" name="username" style="font-size: 15px;" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{phone}" class="form-control" id="c_phone" name="phone" style="font-size: 15px;" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes" class="text-black">Order Notes</label>
+                        <textarea name="notes" id="notes" cols="30" rows="5" class="form-control"
+                                  placeholder="Write your notes here..." style="font-size: 15px;"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <h1 class="mb-3 text-black">Your Bill</h1>
+                    <form th:action="@{/order-laptop}" method="post">
+                        <div class="p-3 p-lg-5 border bg-white" style="font-size: 15px;margin-bottom:40px"
+                             th:each="bookItem : ${booking.bookItems}">
+                            <div class="row">
+                                <div class="col-md-12" style="border-bottom: 1px solid #80808085;padding: 10px;">
+                                    <div class="col-md-4">
+                                        <h3 style="font-weight:600">Hotel</h3>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4 style="font-weight:600" th:text="${bookItem.hotel.name}"></h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="border-bottom: 1px solid #80808085;padding: 10px;">
+                                    <div class="col-md-4">
+                                        <h3 style="font-weight:600">Total room</h3>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4 style="font-weight:600" th:text="'x' + ${bookItem.quantityRoom}"></h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="border-bottom: 1px solid #80808085;padding: 10px;">
+                                    <div class="col-md-4">
+                                        <h3 style="font-weight:600">Total day</h3>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4 style="font-weight:600" th:text="'x' + ${bookItem.quantityDay}"></h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="border-bottom: 1px solid #80808085;padding: 10px;">
+                                    <div class="col-md-4">
+                                        <h3 style="font-weight:600">Total price</h3>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4 style="font-weight:600" th:text="'$' + ${bookItem.totalPrice}"></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success p-3" style="font-size:18px">Book now</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+<div th:replace="~{fragments :: script}"></div>
+
+</body>
+</html>

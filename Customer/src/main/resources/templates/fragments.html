@@ -46,7 +46,7 @@
                                 <a class="nav-link" th:href="@{/booking}" style="color: #6c7591;font-weight:600">Booking</a>
                             </li>
                             <li class="nav-item" style="margin-left: 50px;">
-                                <a class="nav-link" href="#" style="color: #6c7591;font-weight:600">Checkout</a>
+                                <a class="nav-link" th:href="@{/check-bill}" style="color: #6c7591;font-weight:600">Check Bill</a>
                             </li>
                             <li class="nav-item" style="margin-left: 50px;">
                                 <a class="nav-link" href="#" tabindex="-1"
@@ -62,7 +62,7 @@
                                                         background: none;
                                                         font-weight: 600;
                                                         color: #6c7591;" onchange="location=this.value">
-                    <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
+                    <option th:text="${session.username != null} ? ${session.username} : 'Login'"></option>
                     <option th:if="${session.username} == null" value="http://localhost:8088/hotelbooking/login">Sign In</option>
                     <option th:if="${session.username} != null" value="http://localhost:8088/hotelbooking/login?logout">Logout</option>
                     <option value="http://localhost:8088/hotelbooking/register">Sign up</option>

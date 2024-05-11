@@ -72,4 +72,36 @@ public class BookingController {
             return "redirect:/booking";
         }
     }
+
+    @RequestMapping(value = "/update-booking", method = RequestMethod.POST, params = "action=delete")
+    public String deleteBookingHotel(@RequestParam("id") Long id,
+                                     Model model,
+                                     Principal principal){
+        if(principal == null){
+            return "redirect:/login";
+        }
+        String username = principal.getName();
+        Customer customer = customerService.findByUsername(username);
+        Hotel hotel = hotelService.findById(id);
+        Booking booking = bookingService.deleteBookingHotel(hotel, customer);
+        model.addAttribute("booking", booking);
+        return "redirect:/booking";
+    }
+
+    @GetMapping("/check-bill")
+    public String displayCheckBillPage(Model model, Principal principal){
+        if(principal == null){
+            return "redirect:/login";
+        }
+        String username = principal.getName();
+        Customer customer = customerService.findByUsername(username);
+        Booking booking = customer.getBooking();
+        model.addAttribute("customer", customer);
+        model.addAttribute("booking", booking);
+        model.addAttribute("totalBill", booking.getTotalPrice());
+        model.addAttribute("totalRoom", booking.getTotalHotel());
+        model.addAttribute("totalDay", booking.getTotalDay());
+        model.addAttribute("title", "Check Bill");
+        return "bookHotel/check-bill";
+    }
 }

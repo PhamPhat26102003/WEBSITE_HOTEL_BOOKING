@@ -36,11 +36,6 @@ public class BookingService implements IBookingService {
             if(bookItem == null){
                 bookItem = new BookItem();
                 bookItem.setHotel(hotel);
-                if(bookItem.getQuantityDay() > 1){
-                    if(quantityRoom > 1){
-                        bookItem.setTotalPrice(((bookItem.getQuantityDay() * hotel.getCostPrice())*quantityRoom)*0.7);
-                    }
-                }
                 bookItem.setTotalPrice(bookItem.getQuantityDay() * hotel.getCostPrice());
                 bookItem.setQuantityRoom(quantityRoom);
                 bookItem.setQuantityDay(bookItem.getQuantityDay());
@@ -52,11 +47,6 @@ public class BookingService implements IBookingService {
             if(bookItem == null){
                 bookItem = new BookItem();
                 bookItem.setHotel(hotel);
-                if(bookItem.getQuantityDay() > 1){
-                    if(quantityRoom > 1){
-                        bookItem.setTotalPrice(((bookItem.getQuantityDay() * hotel.getCostPrice())*quantityRoom)*0.7);
-                    }
-                }
                 bookItem.setTotalPrice(bookItem.getQuantityDay() * hotel.getCostPrice());
                 bookItem.setQuantityRoom(quantityRoom);
                 bookItem.setQuantityDay(bookItem.getQuantityDay());
@@ -65,10 +55,8 @@ public class BookingService implements IBookingService {
                 bookItemRepository.save(bookItem);
             }else{
                 bookItem.setQuantityRoom(bookItem.getQuantityRoom() + quantityRoom);
-                if(bookItem.getQuantityDay() > 1){
-                    if(quantityRoom > 1){
-                        bookItem.setTotalPrice(bookItem.getTotalPrice() + ((bookItem.getQuantityDay() * hotel.getCostPrice()) * quantityRoom)*0.7);
-                    }
+                if(quantityRoom > 1){
+                    bookItem.setTotalPrice(bookItem.getTotalPrice() + ((bookItem.getQuantityDay() * hotel.getCostPrice()) + hotel.getCostPrice()*0.5));
                 }
                 bookItem.setTotalPrice(bookItem.getTotalPrice() + (bookItem.getQuantityDay() * hotel.getCostPrice()));
                 bookItemRepository.save(bookItem);
@@ -88,18 +76,31 @@ public class BookingService implements IBookingService {
 
     @Override
     public Booking updateBookingHotel(Hotel hotel, int quantityRoom, int quantityDay, Customer customer) {
-        Booking booking =customer.getBooking();
+        Booking booking = customer.getBooking();
         Set<BookItem> bookItems = booking.getBookItems();
 
         BookItem bookItem = findBookItem(bookItems, hotel.getId());
         bookItem.setQuantityDay(quantityDay);
         bookItem.setQuantityRoom(quantityRoom);
-        if(quantityDay > 1){
+        if(quantityDay > 1 && quantityDay <= 3){
             if(quantityRoom > 1){
-                bookItem.setTotalPrice(bookItem.getTotalPrice() + ((quantityDay * hotel.getCostPrice()) * quantityRoom)*0.7);
+                bookItem.setTotalPrice(((quantityDay * hotel.getCostPrice()) + hotel.getCostPrice()*0.5));
             }
+        }else{
+            bookItem.setTotalPrice(quantityDay * hotel.getCostPrice());
         }
-        bookItem.setTotalPrice(bookItem.getTotalPrice() + (quantityDay * hotel.getCostPrice()));
+        if(quantityDay > 3){
+            if(quantityRoom > 1){
+                bookItem.setTotalPrice(((quantityDay * hotel.getCostPrice()) + hotel.getCostPrice()*0.5)*0.9);
+            }
+        }else{
+            bookItem.setTotalPrice(quantityDay * hotel.getCostPrice());
+        }
+        if(quantityRoom > 1){
+            bookItem.setTotalPrice(((quantityDay * hotel.getCostPrice()) + hotel.getCostPrice()*0.5));
+        }else{
+            bookItem.setTotalPrice(quantityDay * hotel.getCostPrice());
+        }
         bookItemRepository.save(bookItem);
 
         int totalRoom = totalRoom(bookItems);
@@ -109,6 +110,27 @@ public class BookingService implements IBookingService {
         booking.setTotalHotel(totalRoom);
         booking.setTotalDay(totalDay);
         booking.setTotalPrice(totalPrice);
+        return bookingRepository.save(booking);
+    }
+
+    @Override
+    public Booking deleteBookingHotel(Hotel hotel, Customer customer) {
+        Booking booking = customer.getBooking();
+        Set<BookItem> bookItems = booking.getBookItems();
+
+        BookItem bookItem = findBookItem(bookItems, hotel.getId());
+        bookItems.remove(bookItem);
+
+        bookItemRepository.delete(bookItem);
+
+        int totalRoom = totalRoom(bookItems);
+        int totalDay = totalDay(bookItems);
+        double totalPrice = totalPrice(bookItems);
+
+        booking.setTotalHotel(totalRoom);
+        booking.setTotalDay(totalDay);
+        booking.setTotalPrice(totalPrice);
+        booking.setBookItems(bookItems);
         return bookingRepository.save(booking);
     }
 

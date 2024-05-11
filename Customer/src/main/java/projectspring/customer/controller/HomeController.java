@@ -34,8 +34,8 @@ public class HomeController {
         model.addAttribute("categories", categories);
         model.addAttribute("title", "Home");
         if (principal != null) {
-            session.setAttribute("username", principal.getName());
             Customer customer = customerService.findByUsername(principal.getName());
+            session.setAttribute("username", customer.getFirstName() + " " + customer.getLastName());
         }else {
             session.removeAttribute("username");
         }
