@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+    <head th:replace="~{/fragments :: header}">
+    </head>
+
+<body>
+    
+<section th:replace="~{fragments :: banner}"></section>
+
+   <section class="container p-3">
+       <div class="booking-table" style="font-size:18px">
+           <div th:if="${check}">
+               <h2 th:text="${check}"></h2>
+           </div>
+           <table class="table" th:if="${check == null}">
+               <thead>
+               <tr>
+                   <th scope="col">Date booking</th>
+                   <th scope="col">Checkout date</th>
+                   <th scope="col">Status</th>
+                   <th scope="col">Payment method</th>
+                   <th scope="col">Total Price</th>
+                   <th scope="col">Action</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr th:each="bookHotel : ${bookHotels}">
+                   <td th:text="${bookHotel.dateBook}">
+                   </td>
+                   <td th:text="${bookHotel.checkoutDate}"></td>
+                   <td th:text="${bookHotel.status}"></td>
+                   <td>Card</td>
+                   <td th:text="'$' + ${bookHotel.totalPrice}"></td>
+                   <td>
+                       <button class="btn btn-primary" type="submit" name="action" value="update" title="update">Book hotel</button>
+                       <button class="btn btn-warning" type="submit" name="action" value="delete" title="delete">Cancel</button>
+                       <a th:href="@{/check-bill}" class="btn btn-success">
+                           Check
+                       </a>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+       </div>
+   </section>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+<div th:replace="~{fragments :: script}"></div>
+
+</body>
+</html>

@@ -6,5 +6,5 @@ import projectspring.library.model.Customer;
 public interface ICustomerService {
     Customer save(CustomerDto customerDto);
     Customer findByUsername(String username);
-    Customer update(CustomerDto customerDto);
+    Customer update(Customer customer);
 }

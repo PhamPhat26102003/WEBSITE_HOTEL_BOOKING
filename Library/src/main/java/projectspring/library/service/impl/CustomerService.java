@@ -37,7 +37,14 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer update(CustomerDto customerDto) {
-        return null;
+    public Customer update(Customer customer) {
+        Customer customerUpdate = customerRepository.findByUsername(customer.getUsername());
+        customerUpdate.setFirstName(customer.getFirstName());
+        customerUpdate.setLastName(customer.getLastName());
+        customerUpdate.setAddress(customer.getAddress());
+        customerUpdate.setCountry(customer.getCountry());
+        customerUpdate.setCity(customer.getCity());
+        customerUpdate.setPhone(customer.getPhone());
+        return customerRepository.save(customerUpdate);
     }
 }

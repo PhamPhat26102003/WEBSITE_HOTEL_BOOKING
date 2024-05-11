@@ -62,7 +62,7 @@
             <div class="row mb-5">
                 <div class="col-md-12">
                     <h1 class="mb-3 text-black">Your Bill</h1>
-                    <form th:action="@{/order-laptop}" method="post">
+                    <form th:action="@{/book-hotel}" method="post">
                         <div class="p-3 p-lg-5 border bg-white" style="font-size: 15px;margin-bottom:40px"
                              th:each="bookItem : ${booking.bookItems}">
                             <div class="row">
@@ -109,11 +109,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success p-3" style="font-size:18px">Book now</button>
+                        </div>
                     </form>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success p-3" style="font-size:18px">Book now</button>
-                    </div>
                 </div>
             </div>
 
