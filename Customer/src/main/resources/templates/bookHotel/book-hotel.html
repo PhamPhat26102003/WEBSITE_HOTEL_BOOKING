@@ -8,6 +8,12 @@
 <section th:replace="~{fragments :: banner}"></section>
 
    <section class="container p-3">
+       <div th:if="${success}">
+           <h2 th:text="${success}" class="text-center success text-success"></h2>
+       </div>
+       <div th:if="${failed}">
+           <h2 th:text="${failed}" class="text-center warning text-warning"></h2>
+       </div>
        <div class="booking-table" style="font-size:18px">
            <div th:if="${check}">
                <h2 th:text="${check}"></h2>
@@ -32,9 +38,8 @@
                    <td>Card</td>
                    <td th:text="'$' + ${bookHotel.totalPrice}"></td>
                    <td>
-                       <button class="btn btn-primary" type="submit" name="action" value="update" title="update">Book hotel</button>
-                       <button class="btn btn-warning" type="submit" name="action" value="delete" title="delete">Cancel</button>
-                       <a th:href="@{/check-bill}" class="btn btn-success">
+                       <a th:href="@{/cancel/{id}(id=${bookHotel.id})}" class="btn btn-warning">Cancel</a>
+                       <a th:href="@{/checked-out/{id}(id=${bookHotel.id})}" class="btn btn-success">
                            Check
                        </a>
                    </td>

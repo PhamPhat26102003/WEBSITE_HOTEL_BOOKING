@@ -1,17 +1,21 @@
 package projectspring.customer.controller;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import projectspring.library.model.BookHotel;
 import projectspring.library.model.Booking;
 import projectspring.library.model.Customer;
 import projectspring.library.service.IBookHotelService;
 import projectspring.library.service.ICustomerService;
-
 import java.security.Principal;
 import java.util.List;
 
@@ -45,5 +49,41 @@ public class BookHotelController {
         BookHotel bookHotel = bookHotelService.save(booking);
         model.addAttribute("bookhotels", bookHotel);
         return "redirect:/book-hotel";
+    }
+
+    @RequestMapping(value = "/checked-out/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String checkedOut(@PathVariable("id") Long id,
+                             Principal principal,
+                             RedirectAttributes redirectAttributes){
+        try{
+            if(principal == null){
+                return "redirect:/login";
+            }
+            bookHotelService.checkedOut(id);
+            redirectAttributes.addFlashAttribute("success", "Checked out...");
+            return "redirect:/book-hotel";
+        }catch(Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("failed", "Fall to check out!!!");
+            return "redirect:/book-hotel";
+        }
+    }
+
+    @RequestMapping(value = "/cancel/{id}")
+    public String cancel(@PathVariable("id") Long id,
+                         Principal principal,
+                         RedirectAttributes redirectAttributes){
+        try{
+            if(principal == null){
+                return "redirect:/login";
+            }
+            bookHotelService.cancel(id);
+            redirectAttributes.addFlashAttribute("success", "Cancel success");
+            return "redirect:/book-hotel";
+        }catch(Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("failed", "Failed to cancel!!!");
+            return "redirect:/book-hotel";
+        }
     }
 }

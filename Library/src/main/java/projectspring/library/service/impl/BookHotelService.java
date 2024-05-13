@@ -31,7 +31,7 @@ public class BookHotelService implements IBookHotelService {
     @Override
     public BookHotel save(Booking booking) {
         BookHotel bookHotel = new BookHotel();
-        bookHotel.setStatus("Waiting...");
+        bookHotel.setStatus("Completed...");
         bookHotel.setDateBook(new Date());
         bookHotel.setCustomer(booking.getCustomer());
         bookHotel.setTotalPrice(booking.getTotalPrice());
@@ -59,12 +59,16 @@ public class BookHotelService implements IBookHotelService {
     }
 
     @Override
-    public BookHotel bookHotel(Long id) {
-        return null;
+    public BookHotel checkedOut(Long id) {
+        BookHotel bookHotel = bookHotelRepository.getById(id);
+        bookHotel.setAccept(true);
+        bookHotel.setCheckoutDate(new Date());
+        bookHotel.setStatus("Checked out...");
+        return bookHotelRepository.save(bookHotel);
     }
 
     @Override
     public void cancel(Long id) {
-
+        bookHotelRepository.deleteById(id);
     }
 }

@@ -5,6 +5,6 @@ import projectspring.library.model.Booking;
 
 public interface IBookHotelService {
     BookHotel save(Booking booking);
-    BookHotel bookHotel(Long id);
+    BookHotel checkedOut(Long id);
     void cancel(Long id);
 }
