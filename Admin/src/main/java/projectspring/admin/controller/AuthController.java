@@ -9,14 +9,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import projectspring.library.dto.AdminDto;
 import projectspring.library.model.Admin;
+import projectspring.library.model.ResetToken;
+import projectspring.library.repository.IAdminRepository;
 import projectspring.library.service.IAdminService;
+import projectspring.library.service.IResetTokenService;
 
 import java.security.Principal;
 
@@ -26,6 +26,10 @@ public class AuthController {
     private IAdminService adminService;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private IResetTokenService resetTokenService;
+    @Autowired
+    private IAdminRepository adminRepository;
 
     @RequestMapping("/index")
     public String indexPage(Model model, Principal principal){
@@ -53,6 +57,43 @@ public class AuthController {
     public String forgotPasswordPage(Model model){
         model.addAttribute("title", "Forgot password");
         return "login/forgot-password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String checkAndSendToEmail(@ModelAttribute AdminDto adminDto, RedirectAttributes redirectAttributes){
+        Admin admin = adminService.findByUsername(adminDto.getUsername());
+        if(admin != null){
+            adminService.sendEmail(admin);
+            redirectAttributes.addFlashAttribute("success", "Send email success, please check your email");
+            return "redirect:/forgot-password";
+        }else {
+            redirectAttributes.addFlashAttribute("failed", "Username not found!!!");
+            return "redirect:/forgot-password";
+        }
+    }
+
+    @GetMapping("reset-password/{token}")
+    public String displayResetPasswordPage(@PathVariable("token") String token, Model model){
+        ResetToken resetToken = resetTokenService.findByToken(token);
+        if(resetToken != null){
+            model.addAttribute("username", resetToken.getAdmin().getUsername());
+            return "login/reset-password";
+        }
+        return "redirect:/forgot-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@ModelAttribute AdminDto adminDto, RedirectAttributes redirectAttributes){
+        Admin admin = adminService.findByUsername(adminDto.getUsername());
+        if(admin != null){
+            admin.setPassword(passwordEncoder.encode(adminDto.getPassword()));
+            adminRepository.save(admin);
+            redirectAttributes.addFlashAttribute("success", "Change password success");
+            return "redirect:/reset-password";
+        }else{
+            redirectAttributes.addFlashAttribute("failed", "Failed to change password!!!");
+            return "redirect:/reset-password";
+        }
     }
 
     @PostMapping("/register-new")

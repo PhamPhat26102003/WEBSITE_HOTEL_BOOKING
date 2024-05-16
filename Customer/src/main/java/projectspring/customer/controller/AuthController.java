@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import projectspring.library.dto.CustomerDto;
+import projectspring.library.dto.ResetPass;
 import projectspring.library.model.City;
 import projectspring.library.model.Customer;
 import projectspring.library.service.ICityService;
@@ -40,24 +41,23 @@ public class AuthController {
 
     @GetMapping("/forgot-password")
     public String forgotPasswordPage(Model model){
+        model.addAttribute("customer", new Customer());
         return "login/forgot-password";
     }
 
     @PostMapping("/forgot-password")
-    public String forgotPassword(@RequestParam("username") String username,
-                                 RedirectAttributes redirectAttributes,
+    public String forgotPassword(RedirectAttributes redirectAttributes,
                                  Model model,
-                                 BindingResult bindingResult){
-        Customer customer = customerService.findByUsername(username);
-        if(customer == null){
-            redirectAttributes.addFlashAttribute("failed", "Username not exist!!!");
+                                 @ModelAttribute("customer")Customer customer){
+        try{
+            customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+            customerService.resetPassword(customer);
+            model.addAttribute("customer", customer);
+            return "redirect:/forgot-password";
+        }catch(Exception e){
+            e.printStackTrace();
             return "redirect:/forgot-password";
         }
-        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        customerService.update(customer);
-        model.addAttribute("customer", customer);
-        redirectAttributes.addFlashAttribute("success", "Change password success");
-        return "redirect:/forgot-password";
     }
 
     @PostMapping("/customer-new")

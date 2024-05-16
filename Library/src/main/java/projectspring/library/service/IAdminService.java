@@ -8,4 +8,6 @@ import java.util.List;
 public interface IAdminService {
     Admin findByUsername(String username);
     Admin register(AdminDto adminDto);
+    String sendEmail(Admin admin);
+    String generateResetToken(Admin admin);
 }

@@ -3,6 +3,7 @@ package projectspring.library.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projectspring.library.dto.CustomerDto;
+import projectspring.library.dto.ResetPass;
 import projectspring.library.model.Customer;
 import projectspring.library.repository.ICustomerRepository;
 import projectspring.library.repository.IRoleRepository;
@@ -45,6 +46,18 @@ public class CustomerService implements ICustomerService {
         customerUpdate.setCountry(customer.getCountry());
         customerUpdate.setCity(customer.getCity());
         customerUpdate.setPhone(customer.getPhone());
+        return customerRepository.save(customerUpdate);
+    }
+
+    @Override
+    public Customer resetPassword(Customer customer) {
+        Customer customerUpdate = customerRepository.findByUsername(customer.getUsername());
+        if(customerUpdate == null){
+            System.out.println("Username not found!!!");
+            return null;
+        }
+        customerUpdate.setPassword(customer.getPassword());
+        System.out.println("Change password success");
         return customerRepository.save(customerUpdate);
     }
 }
